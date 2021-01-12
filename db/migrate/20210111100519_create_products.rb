@@ -2,10 +2,8 @@ class CreateProducts < ActiveRecord::Migration[6.1]
   def change
     create_table :products do |t|
       t.string :title
-      t.string :brand
-      t.string :model
-      t.string :description
-      t.decimal :price
+      t.text :description
+      t.decimal :price, precision:10, scale:2
 
       t.timestamps
     end
