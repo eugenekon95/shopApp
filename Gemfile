@@ -23,8 +23,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'cloudinary'
-gem 'will_paginate'
-gem 'will_paginate-bootstrap4'
+gem 'pagy'
 gem 'faker'
 
 # Use Active Storage variant
