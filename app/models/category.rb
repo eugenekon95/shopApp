@@ -1,10 +1,4 @@
 class Category < ApplicationRecord
- has_many :products 
-
-
- def to_param
-  [id, title.parameterize].join("-")
- end
-
+  has_ancestry
+  has_many :products
 end
-

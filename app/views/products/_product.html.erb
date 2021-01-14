@@ -1,10 +1,7 @@
-<div class="col-4">
-  <div class="card">
-    <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title"><%= product.title %> </h5>
-        <p class="card-text"><%= product.description %></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
+<div class="card border-light m-0" style="max-width: 12rem;">
+  <div class="card-body align-items-center">
+    <% name = Product.find_by(name: product.name) %>
+    <p class="card-text"><%= link_to product.name, category_product_path(category, product, name.name), class: "link-danger" %></p>
+    <h6 class="card-title"><%= number_to_currency(product.price, unit:"UAH", separator: ",", format: "%n%u" ) %> </h6>
   </div>
 </div>
