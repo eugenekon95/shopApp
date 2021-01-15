@@ -6,9 +6,4 @@ class PagesController < ApplicationController
 
   end
 
-  def admin
-    @pagy, @categories = pagy(Category.all)
-    @products = Product.all
-  end
-
 end
