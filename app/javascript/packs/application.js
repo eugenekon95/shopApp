@@ -4,7 +4,6 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import 'jquery'
 import '@popperjs/core'
-import 'bootstrap'
 import '../stylesheets/application'
 
 
@@ -14,6 +13,7 @@ Turbolinks.start()
 ActiveStorage.start()
 require("channels")
 require("jquery")
+require("bootstrap")
 
 require("easy-autocomplete")
 import "./search"
