@@ -3,7 +3,7 @@
               <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
               <div class="card-body">
                 <% name = Product.find_by(name: product.name) %>
-              <p class="card-text"><%= link_to product.name, category_product_path(product.category_id, product, name.name), class: "link-danger" %></p>
+              <p class="card-text"><%= link_to product.name, category_product_path(product.category_id, product, name.name), class: "link-primary" %></p>
               <h6 class="card-title"><%= number_to_currency(product.price, unit:"UAH", separator: ",", format: "%n%u" ) %> </h6>
               </div>
               <div class="card-footer">
