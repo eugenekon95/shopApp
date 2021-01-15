@@ -12,7 +12,6 @@ Turbolinks.start()
 ActiveStorage.start()
 require("channels")
 require("jquery")
-import "bootstrap"
 
 require("easy-autocomplete")
 import "./search"
