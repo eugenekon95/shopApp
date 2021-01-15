@@ -22,6 +22,6 @@ ActiveStorage.start()
 require("channels")
 require("jquery")
 require("easy-autocomplete")
-import "./search"
+
 import "./jquery.easy-autocomplete"
 
