@@ -4,7 +4,7 @@
   <div class="col-lg-9 col-md-6 ps-3 ">
     <h1><%=  @category.present? ? @category.name : "Search result for: #{params[:product_name]}"%></h1>
     <div class="row mx-1 p-3 bg-light align-items-start ">
-      <div class="col-lg-4 col-sm-auto btn-group ">
+      <div class="col-lg-4 col-sm-auto btn-group">
         <%= sortable "name",  params[:min], params[:max], params[:product_name] %>
         <%= sortable "price", params[:min], params[:max], params[:product_name] %>
         <%= sortable "created_at", params[:min], params[:max], params[:product_name], "Created" %>
