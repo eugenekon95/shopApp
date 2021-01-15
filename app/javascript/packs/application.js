@@ -16,8 +16,7 @@ ActiveStorage.start()
 require("channels")
 require("jquery")
 require("easy-autocomplete")
+
 import "./jquery.easy-autocomplete"
-//import "css/site-s"
-//import "popper.js"
 
 

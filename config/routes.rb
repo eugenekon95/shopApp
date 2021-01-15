@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   root 'pages#index', as: 'home'
+  get '/contact', to: 'pages#contact', as: 'contact'
   resources :pages
   resources :categories, only: :show do
     get "range", on: :collection

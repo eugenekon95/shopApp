@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CvApp</title>
+    <title>Shop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -10,14 +10,36 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid mx-lg-5 mx-md-3 mx-sm-2 ">
+    <%= link_to "Shop", home_path, class:"navbar-brand ms-3" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         <%= link_to "Contact", contact_path, class:"nav-link" %>
+       
+      </ul>
+      <%= form_with url: search_categories_path, class: "d-flex", method: :get, local:true do |f|  %>
+        <%= f.search_field :product_name, class:"form-control", placeholder: "Search", data: { behavior: "autocomplete" } %>
+        <%= f.submit "Search", class: "btn btn-success" %>
+      <%end %>
+    </div>
+  </div>
+</nav>
 
-    
- 
-  </body>
+
+<main class="container">
+  <div class="row">
+  </div>
+  <%= yield %>
+</main>
+
+</body>
 </html>
