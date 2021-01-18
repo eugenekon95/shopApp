@@ -2,7 +2,7 @@
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show]
-
+  
   def index
     # @categories = Category.all
     @categories = Category.order(:name).where('name like ?', "%#{params[:term]}%")
@@ -46,7 +46,7 @@ class CategoriesController < ApplicationController
 
   def search
     @categories_list = Category.all
-    @product_list = Product.where('name LIKE ?', "%#{params[:product_name.to_s]}%")
+    @product_list = Product.where('name ILIKE ?', "%#{params[:product_name.to_s]}%")
     products_list
     render :'categories/show'
   end

@@ -29,8 +29,8 @@
         <%@products.each do |product| %>
          <%= render product,  category: @category %>
         <% end %>
-        <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.present? %>
-      <%else %>
+       
+
       
         </div>
       <% end %>
@@ -38,3 +38,4 @@
   </div>
 
 </div>
+ <%= pagy_bootstrap_nav(@pagy).html_safe if @pagy.present? %>
