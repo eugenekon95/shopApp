@@ -9,6 +9,7 @@ class ProductsController < ApplicationController
   def to_param
     name
   end
+
   private
 
   def find_category
@@ -19,10 +20,7 @@ class ProductsController < ApplicationController
     @product = @category.products.find(params[:id])
   end
 
-
   def product_params
-    params.require(:product).permit(:category_id, :price, :description)
+    params.require(:product).permit(:category_id, :price, :photo, :about, :config, :article, :factory, :name)
   end
-
-
 end

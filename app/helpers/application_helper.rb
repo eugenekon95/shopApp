@@ -10,7 +10,7 @@ module ApplicationHelper
               id: column.to_s, class: 'btn btn-outline-danger'
     else
 
-      link_to title, search_categories_path( sort: column, direction: direction, max: min, min: max, product_name: search),
+      link_to title, searchAutocomplete_categories_path(sort: column, direction: direction, max: min, min: max, product_name: search),
               id: column.to_s, class: 'btn btn-outline-danger'
     end
   end

@@ -1,32 +1,10 @@
- <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <% name = Product.find_by(name: product.name) %>
-              <p class="card-text"><%= link_to product.name, category_product_path(product.category_id, product, name.name), class: "link-primary" %></p>
-              <h6 class="card-title"><%= number_to_currency(product.price, unit:"UAH", separator: ",", format: "%n%u" ) %> </h6>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div>
-
-
-       
-
-         
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="card border-light m-0" style="max-width: 12rem;">
+  <% if product.photo.attached? %>
+  <%= image_tag product.photo, class: "card-img-top", alt: product.config %>
+  <%end%>
+  <div class="card-body align-items-center">
+  
+    <p class="card-text"><%= link_to product.name, category_product_path(category, product), class: "link-danger" %></p>
+    <h6 class="card-title"><%= number_to_currency(product.price, unit:"UAH", separator: ",", format: "%n%u" ) %> </h6>
+  </div>
+</div>

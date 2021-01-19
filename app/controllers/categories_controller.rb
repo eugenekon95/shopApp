@@ -2,7 +2,8 @@
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show]
-  
+  before_action :force_json, only: :search
+
   def index
     # @categories = Category.all
     @categories = Category.order(:name).where('name like ?', "%#{params[:term]}%")
@@ -44,9 +45,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def search
+  def searchAutocomplete
     @categories_list = Category.all
-    @product_list = Product.where('name ILIKE ?', "%#{params[:product_name.to_s]}%")
+    @product_list = Product.where('name LIKE ?', "%#{params[:product_name.to_s]}%")
     products_list
     render :'categories/show'
   end
@@ -55,7 +56,16 @@ class CategoriesController < ApplicationController
     name
   end
 
+  def search
+    q = params[:q].downcase
+    @products = Product.where('name LIKE ? or about LIKE ?', "%#{q}%", "%#{q}%").limit(5)
+  end
+
   private
+
+  def force_json
+    request.format = :json
+  end
 
   def sort_column
     Product.column_names.include?(params[:sort]) ? params[:sort] : nil
@@ -91,6 +101,5 @@ class CategoriesController < ApplicationController
                   end
                 end
     @pagy, @products = pagy(@products)
-
   end
 end
