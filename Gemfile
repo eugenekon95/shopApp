@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'pagy', '~> 3.5'
+gem "aws-sdk-s3", require: false
 
 # admin panel
 gem 'activeadmin'
