@@ -12,7 +12,7 @@ local:
    access_key_id: 'AKIAT7RM33SMEOQPGIIR'
    secret_access_key: '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'
    region: 'eu-central-1'
-   bucket: 'arn:aws:s3:::store-x-bucket'
+   bucket: 'store-x-bucket'
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS
