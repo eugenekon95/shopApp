@@ -28,7 +28,17 @@ class CartsController < ApplicationController
       @item.increment(:quantity)
     end
     @item.save
+    @price = Product.find(@item.id).price * @item.quantity
     render 'carts/quantity'
+  end
+
+  def destroy
+    @cart = @user.carts.find(params[:id])
+    @cart_id = @cart.id
+    render 'carts/cart_destroy'
+    @cart.destroy
+
+
   end
 
   private

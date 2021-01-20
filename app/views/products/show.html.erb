@@ -1,36 +1,69 @@
+<% if current_user.nil? %>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Please log in or sing up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        You cannot perform this action until you register
+      </div>
+      <div class="modal-footer">
+        <%= link_to 'Log in', "/users/sign_up", class: "btn btn-secondary"%>
+        <%= link_to 'Sign up', "/users/sign_in", class: "btn btn-secondary"%>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
 
-<div class="container">
-  <div class="row justify-content-between">
+<div class="container mt-5">
+  <div class="row justify-content-between align-items-center">
     <div class="col-auto me-auto"><h3><%=@product.name %></h3></div>
     <div class="col-auto "><h5><span class="badge bg-secondary">Article: <%=@product.article %></span></h5></div>
   </div>
   <hr>
   <div class="row">
     <div class="col-sm">
-      <%= image_tag(@product.photo, class:"img-fluid") %>
+      <%= image_tag(@product.photo, class:"img-fluid", style: 'min-width: 28rem') %>
     </div>
     <div class="col-sm">
-      <div class="row justify-content-between mt-2 jumbotron ">
+      <div class="row justify-content-between mt-2 mb-3 jumbotron ">
         <div class="col-auto align-self-center">
           <h1 class="display-6"><strong><%= number_to_currency(@product.price, unit:"UAH", separator: ",", format: "%n%u" ) %></strong></h1>
         </div>
-           <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
         <div class="col-auto align-self-center">
+          <% if current_user.present? %>
           <%= link_to 'Add to cart',
                       add_to_cart_path(item: @product.id),
-                      class: 'btn btn-danger btn-lg', id: "cart_button",
+                      class: 'btn btn-dark btn-lg', id: "cart_button",
                       role: "button", style: "color: white",
                       remote: true,
                       data: { "bs-target": "#addProduct", "bs-toggle": "modal" }%>
-          <button type="button" class="btn btn-dark btn-lg">Buy now</button>
+
+          <%= link_to 'Buy now',
+                      new_order_path(product: @product.id),
+                      class: 'btn btn-danger btn-lg', id: "buy_button",
+                      role: "button", style: "color: white"%>
+            <% else %>
+            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add to cart
+            </button>
+            <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Buy now
+            </button>
+          <% end %>
         </div>
       </div>
-      <div class="row">
-        <div class="col">Config: <%=@product.config %></div>
+      <div class="row jumbotron mb-0">
+        <h4>Config:</h4>
+        <div class="col"> <%=@product.config %></div>
       </div>
       <br>
-      <div class="row">
-        <div class="col">Manufacturer: <%=@product.factory %></div>
+      <div class="row jumbotron mt-0">
+        <h4>Factory:</h4>
+        <div class="col"> <%=@product.factory %></div>
       </div>
     </div>
   </div>
@@ -38,7 +71,7 @@
   <div class="row mx-3">
     <%= @product.about %>
   </div>
-   <div class="card card-outline-secondary my-4">
+     <div class="card card-outline-secondary my-4">
           <div class="card-header">
             Product Reviews
           </div>
