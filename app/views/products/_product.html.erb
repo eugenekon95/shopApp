@@ -1,6 +1,6 @@
 <div class="card border-light m-0" style="max-width: 12rem;">
   <% if product.photo.attached? %>
-  <%= image_tag self.photo.attachment.service_url, class: "card-img-top", alt: product.config %>
+  <%= image_tag product.photo, class: "card-img-top", alt: product.config %>
   <%end%>
   <div class="card-body align-items-center">
   
