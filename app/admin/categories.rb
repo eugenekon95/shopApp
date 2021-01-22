@@ -4,7 +4,18 @@ ActiveAdmin.register Category do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :name, :image
+
+  form do |f|
+    f.inputs  do
+      f.input :ancestry, as: :select, collection: Category.all
+      f.input :name
+      
+    end
+    f.actions
+
+  
+  end 
+    permit_params :name
   #
   # or
   #
