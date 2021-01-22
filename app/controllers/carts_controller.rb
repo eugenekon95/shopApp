@@ -28,7 +28,7 @@ class CartsController < ApplicationController
       @item.increment(:quantity)
     end
     @item.save
-    @price = Product.find(@item.id).price * @item.quantity
+    @price = Product.find(@item.item).price * @item.quantity
     render 'carts/quantity'
   end
 

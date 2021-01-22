@@ -42,8 +42,14 @@
           </div>
         </div>
       <hr>
+       <div class="field mb-2">
+      <%= form.label :quantity %>
+      <%= form.number_field :quantity, value: nil, min: 1, max:params[:quantity].to_i,required: true, class: "form-control" %>
+    </div>
       <div class="actions">
+      
         <%= form.submit( {:class => "btn btn-danger",id: "button"})%>
+        
       </div>
         <div class="field">
           <%= form.hidden_field :item, value: @product.id, class: "form-control"%>
@@ -51,16 +57,11 @@
       </div>
     </div>
 
-    <div class="field">
-      <%= form.label :quantity %>
-      <%= form.number_field :quantity, value: params[:quantity].to_i, class: "form-control"  %>
-    </div>
+   
 
 
 
-    <div class="actions">
-      <%= form.submit( {:class => "btn btn-danger",id: "button"})%>
-    </div>
+   
 
 <% end %>
 <script>
