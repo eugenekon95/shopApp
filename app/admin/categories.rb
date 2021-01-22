@@ -15,7 +15,7 @@ ActiveAdmin.register Category do
 
   
   end 
-    permit_params :name
+    permit_params :name, :ancestry
   #
   # or
   #
