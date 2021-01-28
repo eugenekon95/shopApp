@@ -1,10 +1,23 @@
-<div class="card border-light m-0" style="max-width: 12rem;">
-  <% if product.photo.attached? %>
-  <%= image_tag product.photo, class: "card-img-top", alt: product.config %>
-  <%end%>
-  <div class="card-body align-items-center">
-  
-    <p class="card-text"><%= link_to product.name, category_product_path(category, product), class: "link-danger" %></p>
-    <h6 class="card-title"><%= number_to_currency(product.price, unit:"UAH", separator: ",", format: "%n%u" ) %> </h6>
+<% @products.each do |product| %>
+  <div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+      <%= image_tag(product.image_url, class: "card-img-top") %>
+      <div class="card-body">
+        <h4 class="card-title">
+          <%= link_to product.name, product, class: "text-danger" %>
+        </h4>
+        <div class="row">
+          <div class="col-6">
+            <h5>$<%= product.price %></h5>
+          </div>
+          <div class="col-6">
+            <%= link_to(product_order_items_path(product), method: :post, class: "text-danger float-right") do %>
+              <i class="fas fa-shopping-basket"></i>
+            <% end %>
+          </div>
+        </div>
+        <p class="text-justify card-text"><%= product.description %></p>
+      </div>
+    </div>
   </div>
-</div>
+<% end %>

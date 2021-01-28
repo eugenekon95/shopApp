@@ -1,92 +1,84 @@
-<% if current_user.nil? %>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Please log in or sing up</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        You cannot perform this action until you register
-      </div>
-      <div class="modal-footer">
-        <%= link_to 'Log in', "/users/sign_up", class: "btn btn-secondary"%>
-        <%= link_to 'Sign up', "/users/sign_in", class: "btn btn-secondary"%>
-      </div>
-    </div>
-  </div>
-</div>
-<% end %>
+<div class="container mt-5 pb-5">
 
-<div class="container mt-5">
-  <div class="row justify-content-between align-items-center">
-    <div class="col-auto me-auto"><h3><%=@product.name %></h3></div>
-    <div class="col-auto "><h5><span class="badge bg-secondary">Article: <%=@product.article %></span></h5></div>
-  </div>
-  <hr>
   <div class="row">
-    <div class="col-sm">
-      <%= image_tag(@product.photo, class:"img-fluid", style: 'min-width: 28rem') %>
-    </div>
-    <div class="col-sm">
-      <div class="row justify-content-between mt-2 mb-3 jumbotron ">
-        <div class="col-auto align-self-center">
-          <h1 class="display-6"><strong><%= number_to_currency(@product.price, unit:"UAH", separator: ",", format: "%n%u" ) %></strong></h1>
-        </div>
-        <div class="col-auto align-self-center">
-          <% if current_user.present? %>
-          <%= link_to 'Add to cart',
-                      add_to_cart_path(item: @product.id),
-                      class: 'btn btn-dark btn-lg', id: "cart_button",
-                      role: "button", style: "color: white",
-                      remote: true,
-                      data: { "bs-target": "#addProduct", "bs-toggle": "modal" }%>
 
-          <%= link_to 'Buy now',
-                      new_order_path(product: @product.id),
-                      class: 'btn btn-danger btn-lg', id: "buy_button",
-                      role: "button", style: "color: white"%>
-            <% else %>
-            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Add to cart
-            </button>
-            <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Buy now
-            </button>
+    <div class="col-lg-3">
+      <%= render 'shared/categories' %>
+    </div>
+
+    <div class="col-lg-9 my-4">
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="card h-100">
+           
+   <%= cl_image_tag(@product.image_url, class: "card-img-top") %>
+ 
+            <div class="card-body">
+              <h4 class="card-title">
+                <%= @product.name %> ( <%= @product.average_rating  %> <i class="fas fa-star" style="color: #ffde00"></i>)
+              </h4>
+              <h5>$<%= @product.price %></h5>
+              <p class="card-text text-justify"><%= @product.description %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7 py-5">
+          <% if current_user.present? && allowed_to_comment(@product) %>
+            <div class="card shadow">
+              <div class="row">
+                <div class="rating-stars col-12 my-3 pl-5">
+                  <h6>Rate product:</h6>
+                  <%= render 'comments/stars_rating' %>
+                </div>
+                <div class="col-12 pl-5 mb-3 pr-5">
+                  <%= render 'comments/comment_form', product_id: @product.id, comment: @comment %>
+                </div>
+              </div>
+            </div>
           <% end %>
         </div>
-      </div>
-      <div class="row jumbotron mb-0">
-        <h4>Config:</h4>
-        <div class="col"> <%=@product.config %></div>
-      </div>
-      <br>
-      <div class="row jumbotron mt-0">
-        <h4>Factory:</h4>
-        <div class="col"> <%=@product.factory %></div>
+
+        <% @comments.each do |comment| %>
+          <div class="col-lg-10">
+            <div class="card shadow mb-5">
+              <div class="card-header">
+                <h6><%= comment.user.name %></h6>
+              </div>
+
+              <div class="card-body">
+                <% comment.rating.times do %>
+                  <i class="fas fa-star" style="color: #ffde00"></i>
+                <% end %>
+                <% blank_stars(comment.rating).times do %>
+                  <i class="far fa-star" style="color: #e1e1e1"></i>
+                <% end %>
+                <p class="card-text mt-3"><%= comment.body %></p>
+              </div>
+
+              <% if comment_author?(current_user, comment) %>
+                <div class="row">
+                  <div class="toggle-edit-btn col-12 text-right pl-5 mb-3 pr-5">
+                    <a class="text-dark" style="font-size: 1.5em; cursor: pointer">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <%= link_to(product_comment_path(@product, comment),
+                                method: :delete, class: "text-dark ml-3", style: "font-size: 1.5em") do %>
+                      <i class="far fa-trash-alt"></i>
+                    <% end %>
+                  </div>
+                  <div class="update-comment-form col-12 text-right pl-5 mb-3 pr-5">
+                    <%= render 'comments/comment_form', comment: comment %>
+                  </div>
+                </div>
+              <% end %>
+
+            </div>
+          </div>
+        <% end %>
+
       </div>
     </div>
   </div>
-  <hr>
-  <div class="row mx-3">
-    <%= @product.about %>
-  </div>
-     <div class="card card-outline-secondary my-4">
-          <div class="card-header">
-            Product Reviews
-          </div>
-          <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
-            <a href="#" class="btn btn-danger">Leave a Review</a>
-          </div>
-        </div>
-
+  <%= render 'products/lightbox' %>
 </div>

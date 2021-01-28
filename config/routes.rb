@@ -1,25 +1,22 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
-  resources :orders
-  get 'order_list', to: 'orders#index', as:'order_index'
-  devise_for :users # , ActiveAdmin::Devise.config
-  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin::Devise.config
+  # devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  root 'pages#index', as: 'home'
-  get '/contact', to: 'pages#contact', as: 'contact'
-  get 'add', to: 'carts#add', as: 'add_to_cart'
-  get 'quantity', to: 'carts#change_quantity'
-  get 'buy', to: 'orders#add_order'
-  # get 'category', to: 'pages#category', as: 'category'
-  resources :carts
-  resources :pages
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  root to: 'products#index'
+  get 'autocomplete', to: 'products#complete', as: 'complete'
+
   resources :categories, only: :show do
-    get 'range', on: :collection
-    get 'search', on: :collection
-    get 'searchAutocomplete', on: :collection
     resources :products, only: %i[index show]
   end
-  resources :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :products, only: %i[index show] do
+    resources :comments, only: %i[create update destroy]
+    resources :order_items, only: %i[create update destroy]
+    get :search, on: :collection
+  end
+
+  resource :cart, only: %i[show update] do
+    get :profile, on: :collection
+  end
 end

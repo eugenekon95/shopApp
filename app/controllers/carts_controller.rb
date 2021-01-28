@@ -1,57 +1,27 @@
-# frozen_string_literal: true
-
 class CartsController < ApplicationController
-  before_action :set_user
-  before_action :find_product, only: [:change_quantity]
-  def index
-    @items_list = @user.carts
+  before_action :authenticate_user!
+
+  def show
+    @order_items = current_order.order_items
   end
 
-  def add
-    cart_params = permitted_cart_params.merge(user_id: @user.id)
-    @product = Cart.find_by(cart_params.except(:quantity))
-
-    if @product.present?
-      @product.increment(:quantity)
-      @product.save
-    else
-      Cart.create(cart_params)
-    end
-    render 'carts/cart_add', product: @product
+  def update
+    update_order_items_quantities
+    current_order.update(total_price: params[:total_price].to_f, status: 'ordered')
+    last_ordered_order = current_user.orders.ordered.last
+    OrderMailer.complete_order_email(current_user, last_ordered_order).deliver_now
   end
 
-  def change_quantity
-    case params[:argument]
-    when '-'
-      @item.quantity <= 1 ? @item.quantity = 1 : @item.decrement(:quantity)
-    when '+'
-      @item.increment(:quantity)
-    end
-    @item.save
-    @price = Product.find(@item.item).price * @item.quantity
-    render 'carts/quantity'
-  end
-
-  def destroy
-    @cart = @user.carts.find(params[:id])
-    @cart_id = @cart.id
-    render 'carts/cart_destroy'
-    @cart.destroy
-
-
+  def profile
+    @ordered_orders = current_user.orders.ordered.order(created_at: :desc).paginate(page: params[:page], per_page: 6)
   end
 
   private
 
-  def set_user
-    @user = current_user
-  end
-
-  def permitted_cart_params
-    params.permit(:item, :quantity)
-  end
-
-  def find_product
-    @item = Cart.find(params[:id])
+  def update_order_items_quantities
+    quantities_array = params[:quantities].to_ary
+    current_order.order_items.each.with_index do |item, index|
+      item.update(quantity: quantities_array[index].to_i)
+    end
   end
 end

@@ -1,11 +1,9 @@
 class Order < ApplicationRecord
   belongs_to :user
+  has_many :order_items, dependent: :destroy
 
-  VALID_QUANTITY = /\A\d\z/i
-  validates :quantity, presence: true#, format: { with: VALID_QUANTITY }
-  validates :user_id, :item, presence: true
-
-  scope :in_process, -> { where('status = 0') }
-  scope :confirmed, -> { where('status = 1') }
-  scope :cancelled, -> { where('status = 2') }
+  enum status: %i[pending ordered canceled]
+  after_initialize do
+    self.status ||= :pending if new_record?
+  end
 end

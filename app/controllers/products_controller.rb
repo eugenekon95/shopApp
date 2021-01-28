@@ -1,26 +1,21 @@
 class ProductsController < ApplicationController
-  before_action :find_category, only: [:show]
-  before_action :set_product, only: [:show]
-
-  def index; end
-
-  def show; end
-
-  def to_param
-    name
+  def index
+    @products = SortProductsService.new(params, Product.all, 6).call
+    @categories = Category.where(parent_id: nil)
   end
 
-  private
-
-  def find_category
-    @category = Category.find(params[:category_id])
+  def show
+    @product = Product.find(params[:id])
+    @comment = @product.comments.build
+    @comments = @product.comments.where.not(id: nil)
   end
 
-  def set_product
-    @product = @category.products.find(params[:id])
+  def complete
+    render json: Product.all.map(&:name)
   end
 
-  def product_params
-    params.require(:product).permit(:category_id, :price, :photo, :about, :config, :article, :factory, :name)
+  def search
+    @products = Product.where('name ILIKE ?', "%#{params[:q]}%").paginate(page: params[:page], per_page: 3)
+    render :index
   end
 end

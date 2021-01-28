@@ -1,29 +1,32 @@
 ActiveAdmin.register Product do
+  permit_params :name, :description, :image, :price, :category_id
+
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :description
+    column :image
+    column :price
+    actions
+  end
+
+  show do
+    product
+  end
+
+  filter :name
+  filter :price
+  filter :created_at
+
   form do |f|
-    f.inputs  do
-      f.input :category_id, as: :select, collection: Category.all
+    f.inputs do
+      f.input :category
       f.input :name
+      f.input :description
+      f.input :image
       f.input :price
-      f.input :factory
-      f.input :article
-      f.input :config
-      f.input :about
-      f.input :photo, as: :file
     end
     f.actions
   end
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  permit_params :price, :about, :config, :photo, :article, :factory, :name, :category_id
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:price, :about, :config, :photo, :article, :factory, :name, :category_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
 end
