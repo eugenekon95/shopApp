@@ -19,6 +19,9 @@
               </h4>
               <h5>$<%= @product.price %></h5>
               <p class="card-text text-justify"><%= @product.description %></p>
+               <%= link_to(product_order_items_path(@product), method: :post, class: "text-danger float-right") do %>
+              <i class="fas fa-shopping-basket"></i>
+            <% end %>
             </div>
           </div>
         </div>
