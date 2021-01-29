@@ -2,6 +2,7 @@
   <div class="container">
 
     <%= link_to "Store-X", root_path, class: "navbar-brand" %>
+    <%= link_to "Contact", contact_path, class: "nav-link text-white" %>
 
     <%= form_with url: search_products_path, class: "search_form form-inline ml-lg-5", method: :get, local: true do |f| %>
       <%= f.text_field :q, id: "search-product", class: "form-control mr-2", type: "search",
@@ -18,27 +19,27 @@
       <ul class="navbar-nav ml-auto">
         <% if current_user %>
           <li class="nav-item">
-            <%= link_to 'Admin Panel',  admin_root_path, class: "nav-link"%>
+            <%= link_to 'Admin Panel',  admin_root_path, class: "nav-link text-white"%>
           </li>
           <li class="nav-item ml-lg-3">
-            <%= link_to(profile_cart_path, class: "nav-link") do %>
+            <%= link_to(profile_cart_path, class: "nav-link text-white") do %>
               <i class="fas fa-book"></i>
             <% end %>
           </li>
           <li class="nav-item ml-lg-3">
-            <%= link_to(cart_path, class: "nav-link") do %>
+            <%= link_to(cart_path, class: "nav-link text-white") do %>
               <i class="fas fa-shopping-cart"></i>
             <% end %>
           </li>
           <li class="nav-item ml-lg-3">
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link text-white" %>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Login", new_user_session_path, class: "nav-link text-white" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Register", new_user_registration_path, class: "nav-link" %>
+            <%= link_to "Register", new_user_registration_path, class: "nav-link text-white" %>
           </li>
         <% end %>
       </ul>

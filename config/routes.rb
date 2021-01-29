@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   root to: 'products#index'
   get 'autocomplete', to: 'products#complete', as: 'complete'
+  get '/contact', to: 'pages#contact', as: 'contact'
 
   resources :categories, only: :show do
     resources :products, only: %i[index show]

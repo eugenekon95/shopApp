@@ -18,4 +18,7 @@ class ProductsController < ApplicationController
     @products = Product.where('name ILIKE ?', "%#{params[:q]}%").paginate(page: params[:page], per_page: 3)
     render :index
   end
+  def contact
+    
+  end
 end
