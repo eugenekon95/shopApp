@@ -3,6 +3,7 @@
 
     <%= link_to "Store-X", root_path, class: "navbar-brand" %>
     <%= link_to "Contact", contact_path, class: "nav-link text-white" %>
+    <%= link_to "My orders", profile_cart_path, class: "nav-link text-white" %>
 
     <%= form_with url: search_products_path, class: "search_form form-inline ml-lg-5", method: :get, local: true do |f| %>
       <%= f.text_field :q, id: "search-product", class: "form-control mr-2", type: "search",
@@ -21,11 +22,7 @@
           <li class="nav-item">
             <%= link_to 'Admin Panel',  admin_root_path, class: "nav-link text-white"%>
           </li>
-          <li class="nav-item ml-lg-3">
-            <%= link_to(profile_cart_path, class: "nav-link text-white") do %>
-              <i class="fas fa-book"></i>
-            <% end %>
-          </li>
+          
           <li class="nav-item ml-lg-3">
             <%= link_to(cart_path, class: "nav-link text-white") do %>
               <i class="fas fa-shopping-cart"></i>
