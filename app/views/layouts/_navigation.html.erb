@@ -20,7 +20,7 @@
       <ul class="navbar-nav ml-auto">
         <% if current_user %>
           <li class="nav-item">
-            <%= link_to 'Admin Panel',  admin_root_path, class: "nav-link text-white"%>
+            <%= link_to 'Admin Panel',  admin_root_path, class: "nav-link text-white" if current_user.superadmin?%>
           </li>
           
           <li class="nav-item ml-lg-3">
