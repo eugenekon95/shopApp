@@ -14,6 +14,8 @@ set :config_example_suffix, ".example"
 set :config_files, ["config/database.yml", "config/secrets.yml"]
 set :nginx_use_ssl, false
 
+append :linked_files, "config/master.key"
+
 namespace :deploy do
   before 'check:linked_files', 'set:master_key'
   before 'check:linked_files', 'config:push'
