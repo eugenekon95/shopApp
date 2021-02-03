@@ -22,3 +22,4 @@ namespace :deploy do
 end
 after "deploy:finished", "nginx:restart"
 after "deploy:finished", "puma:start"
+
