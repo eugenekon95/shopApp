@@ -82,4 +82,4 @@ production:
   <<: *default
   database: x_store_production
   username: x_store
-  password: <%= ENV['GEEKHUB_SHOP_DATABASE_PASSWORD'] %>
+  password: 
