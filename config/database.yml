@@ -82,4 +82,4 @@ production:
   <<: *default
   database: x_store_production
   username: x_store
-  password: 
+  password: <%= ENV['X_STORE_DATABASE_PASSWORD'] %>
