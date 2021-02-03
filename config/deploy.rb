@@ -15,7 +15,7 @@ set :config_files, ["config/database.yml", "config/secrets.yml"]
 set :nginx_use_ssl, false
 
 namespace :deploy do
-
+  before 'check:linked_files', 'set:master_key'
   before 'check:linked_files', 'config:push'
   before 'check:linked_files', 'puma:jungle:setup'
   before 'check:linked_files', 'puma:nginx_config'
@@ -23,12 +23,4 @@ end
 after "deploy:finished", "nginx:restart"
 after "deploy:finished", "puma:start"
 
-namespace :set do
-  task :master_key do
-    on roles(:app), in: :sequence, wait: 10 do
-      unless test("[ -f #{shared_path}/config/master.key ]")
-        upload! 'config/master.key', "#{shared_path}/config/master.key"
-      end
-    end
-  end
-end
+
