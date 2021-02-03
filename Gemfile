@@ -63,3 +63,13 @@ gem 'omniauth-rails_csrf_protection'
 
 gem 'carrierwave'
 gem 'cloudinary'
+
+group :development do
+  gem "capistrano"
+  gem "capistrano-rvm"
+  gem "capistrano-rails"
+  gem "capistrano3-puma", github: "seuros/capistrano-puma"
+  gem "capistrano-nginx", "~> 1.0"
+  gem "capistrano-upload-config"
+  gem "sshkit-sudo"
+end
