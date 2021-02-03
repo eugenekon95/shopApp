@@ -1,4 +1,4 @@
-namespace :master do
+namespace :deploy do
   desc 'Pushing master key to the server'
   task :master_key do
     on roles(:app), in: :sequence, wait: 10 do
