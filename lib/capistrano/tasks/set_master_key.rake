@@ -1,4 +1,4 @@
-namespace :deploy do
+namespace :set do
   namespace :check do
     before :linked_files, :set_master_key do
       on roles(:app), in: :sequence, wait: 10 do
