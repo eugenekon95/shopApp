@@ -21,4 +21,3 @@ namespace :deploy do
   before 'check:linked_files', 'puma:jungle:setup'
 end
 after "deploy:finished", "nginx:restart"
-after "deploy:finished", "puma:restart"
